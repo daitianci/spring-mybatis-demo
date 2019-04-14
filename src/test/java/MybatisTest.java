@@ -2,6 +2,7 @@ import com.honor.mybatis.entity.Order;
 import com.honor.mybatis.entity.Role;
 import com.honor.mybatis.entity.User;
 import com.honor.mybatis.mapper.OrderMapper;
+import com.honor.mybatis.mapper.ResourceMapper;
 import com.honor.mybatis.mapper.RoleMapper;
 import com.honor.mybatis.mapper.UserMapper;
 import org.junit.Test;
@@ -11,7 +12,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import sun.util.resources.cldr.es.CalendarData_es_PY;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 戴天赐 on 2019/4/14.
@@ -27,6 +30,17 @@ public class MybatisTest {
 
     @Resource
     RoleMapper roleMapper;
+
+    @Resource
+    ResourceMapper resourceMapper;
+
+    @Test
+    public void testSelect(){
+        Map<String,Object> params = new HashMap<>();
+//        params.put("name","用户");
+        params.put("parent_id",2);
+        List<com.honor.mybatis.entity.Resource> resources = resourceMapper.selectByParams(params);
+    }
 
     @Test
     public void testOneToOne() {
