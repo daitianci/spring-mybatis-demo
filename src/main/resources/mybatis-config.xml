@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	
+	<properties resource="db.properties"/>
+	
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="true" />
+		<!--设置懒加载-->
+		<!--<setting name="lazyLoadingEnabled" value="true"/>-->
+		<!--经常跟lazyLoadingEnabled配合使用，但是我们默认是不懒加载，在xml查询方法中配置fetch=lazy小开关开启懒加载，以免影响其他方
+            法的调用，在这里运用于嵌套查询，以免造成N+1查询，aggressiveLazyLoading必须关闭，否则执行了实例的任何一个方法都会触发加载
+            而不是懒加载的属性，阻碍延迟加载-->
+		<setting name="aggressiveLazyLoading" value="false"/>
+	</settings>
+</configuration>
