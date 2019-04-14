@@ -4,9 +4,27 @@
   <resultMap id="BaseResultMap" type="com.honor.mybatis.entity.Order">
     <id column="Id" jdbcType="INTEGER" property="id" />
     <result column="order_name" jdbcType="VARCHAR" property="orderName" />
-    <result column="user_id" jdbcType="INTEGER" property="userId" />
-    <result column="student_id" jdbcType="INTEGER" property="studentId" />
+    <!--<result column="user_id" jdbcType="INTEGER" property="userId" />-->
+    <!--<result column="student_id" jdbcType="INTEGER" property="studentId" />-->
   </resultMap>
+
+  <!--嵌套结果得方法
+      一次性查询出所有得关联，通过表连接查询，无法实现懒加载，互联网环境下不推荐-->
+  <!--<resultMap id="RelatieveMap" type="com.honor.mybatis.entity.Order" extends="BaseResultMap">-->
+    <!--<association property="user" javaType="com.honor.mybatis.entity.User" columnPrefix="user_">-->
+      <!--<id column="id" jdbcType="INTEGER" property="id"/>-->
+      <!--<result column="username" jdbcType="VARCHAR" property="username"/>-->
+    <!--</association>-->
+  <!--</resultMap>-->
+
+  <!--嵌套查询方法，延迟加载类属性，可以多个association，代表有多个类属性需要加载数据，推荐方法-->
+  <resultMap id="RelatieveMap" type="com.honor.mybatis.entity.Order" extends="BaseResultMap">
+    <!--fetchType指定类型为懒加载，此外mybatis-config得setting还得设置aggressiveLazyLoading,还有spring必须引用mybatis-config.xml才会起作用
+    column="{id=role_id}这里可以传入多参数去匹配查询-->
+    <association property="user" fetchType="lazy" column="user_id" select="com.honor.mybatis.mapper.UserMapper.selectByPrimaryKey"/>
+    <association property="student"  fetchType="lazy" column="student_id" select="com.honor.mybatis.mapper.StudentMapper.selectByPrimaryKey"/>
+  </resultMap>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_order
     where Id = #{id,jdbcType=INTEGER}
@@ -27,7 +45,7 @@
       student_id = #{studentId,jdbcType=INTEGER}
     where Id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="RelatieveMap">
     select Id, order_name, user_id, student_id
     from t_order
     where Id = #{id,jdbcType=INTEGER}

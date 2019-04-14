@@ -6,6 +6,13 @@
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="sn" jdbcType="VARCHAR" property="sn" />
   </resultMap>
+
+  <!--嵌套查询方法，懒加载-->
+  <resultMap id="RelativeMap" type="com.honor.mybatis.entity.Role" extends="BaseResultMap">
+    <collection property="users" fetchType="lazy" column="id"
+                select="com.honor.mybatis.mapper.UserMapper.selectUserByRoleId"/>
+  </resultMap>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_role
     where id = #{id,jdbcType=INTEGER}
@@ -23,11 +30,19 @@
       sn = #{sn,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="RelativeMap">
     select id, name, sn
     from t_role
     where id = #{id,jdbcType=INTEGER}
   </select>
+  
+  <select id="selectRoleByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select r.id, r.name, r.sn
+    from t_role r
+    left JOIN t_user_role ur on r.id = ur.role_id
+    where ur.user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  
   <select id="selectAll" resultMap="BaseResultMap">
     select id, name, sn
     from t_role

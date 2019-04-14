@@ -5,9 +5,9 @@ public class Order {
 
     private String orderName;
 
-    private Integer userId;
+    private User user;
 
-    private Integer studentId;
+    private Student student;
 
     public Integer getId() {
         return id;
@@ -18,6 +18,7 @@ public class Order {
     }
 
     public String getOrderName() {
+
         return orderName;
     }
 
@@ -25,19 +26,29 @@ public class Order {
         this.orderName = orderName;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Integer getStudentId() {
-        return studentId;
+    public Student getStudent() {
+        return student;
     }
 
-    public void setStudentId(Integer studentId) {
-        this.studentId = studentId;
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", orderName='" + orderName + '\'' +
+                ", user=" + user +
+                ", student=" + student +
+                '}';
     }
 }

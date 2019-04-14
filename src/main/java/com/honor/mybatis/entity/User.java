@@ -1,5 +1,7 @@
 package com.honor.mybatis.entity;
 
+import java.util.List;
+
 public class User {
     private Integer id;
 
@@ -10,6 +12,8 @@ public class User {
     private String nickname;
 
     private Integer status;
+
+    private List<Role> roles;
 
     public Integer getId() {
         return id;
@@ -49,5 +53,25 @@ public class User {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", status=" + status +
+                ", roles=" + roles +
+                '}';
     }
 }

@@ -12,5 +12,7 @@ public interface UserMapper {
 
     List<User> selectAll();
 
+    List<User> selectUserByRoleId(Integer roleId);
+
     int updateByPrimaryKey(User record);
 }
